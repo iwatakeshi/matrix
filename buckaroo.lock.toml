@@ -1,0 +1,9 @@
+manifest = "50edb5bbff552cd414e9a14d5be71ce1706d19db59ac1509b415714832fbc3a5"
+
+[[dependency]]
+package = "github.com/iwatakeshi/array"
+target = "//:array"
+
+[lock."github.com/iwatakeshi/array"]
+versions = [ "branch=master" ]
+revision = "5342a561d89b4c25de6c09fa27333415d8e90ece"

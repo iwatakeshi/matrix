@@ -1,0 +1,5 @@
+targets = [ "//:buckaroo" ]
+
+[[dependency]]
+package = "github.com/iwatakeshi/array"
+version = "*"

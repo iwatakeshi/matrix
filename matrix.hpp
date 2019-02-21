@@ -69,7 +69,7 @@ public:
    * Returns the column at the given index with bound checking.
    */
   array<T>& at(int64_t row) {
-    if (row < 0 || row >= rows) {
+    if (row < 0 || row >= rows_) {
       throw std::out_of_range("Index is out of bounds");
     }
 
@@ -80,7 +80,7 @@ public:
    * Returns the column at the given index with bound checking.
    */
   const array<T>& at(int64_t row) const {
-    if (row < 0 || row >= rows) {
+    if (row < 0 || row >= rows_) {
       throw std::out_of_range("Index is out of bounds");
     }
 
@@ -91,7 +91,7 @@ public:
    * Returns the element at the given indices with bound checking.
    */
   array<T>& at(int64_t row, int64_t column) {
-    if (row < 0 || row >= rows) {
+    if (row < 0 || row >= rows_) {
       throw std::out_of_range("Index is out of bounds");
     }
 
@@ -106,7 +106,7 @@ public:
    * Returns the element at the given indices with bound checking.
    */
   const array<T>& at(int64_t row, int64_t column) const {
-    if (row < 0 || row >= rows) {
+    if (row < 0 || row >= rows_) {
       throw std::out_of_range("Index is out of bounds");
     }
 
@@ -116,7 +116,7 @@ public:
 
     return matrix_[row][column];
   }
-
+  
   /**
    * Returns the number of rows in this matrix.
    */

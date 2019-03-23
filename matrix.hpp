@@ -228,6 +228,21 @@ class matrix {
   }
 
   /**
+   * Sets the value at the given indices with bound checking.
+   */
+  void at(int64_t row, int64_t column, const T& value) {
+    if (row < 0 || row >= rows_) {
+      throw std::out_of_range("Index is out of bounds");
+    }
+
+    if (column < 0 || column >= columns_) {
+      throw std::out_of_range("Index is out of bounds");
+    }
+
+    matrix_[row][column] = value;
+  }
+
+  /**
    * Returns the number of rows in this matrix.
    */
   int64_t rows() const {

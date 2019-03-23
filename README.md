@@ -24,12 +24,13 @@ You can also add a [version constraint](https://github.com/LoopPerfect/buckaroo/
 | `matrix(n, m, value)` | _O(n^2)_    | Initializes a new matrix of size `n` by `m` with the given value. |
 | `matrix(list)`        | _O(n^2)_    | Initializes a new matrix with list initialization.                |
 
-| Method                | Performance | Description                                                                        |
-| --------------------- | ----------- | ---------------------------------------------------------------------------------- |
-| `at(index): T`        | _O(n^2)_    | Returns the element at the given index with bound checking.                        |
-| `at(index, value): T` | _O(n^2)_    | Sets the value at the given index with bound checking.                             |
-| `begin(): iterator`   | _O(1)_      | Returns an iterator pointing to the first element in the matrix.                   |
-| `end(): iterator`     | _O(1)_      | Returns an iterator referring to the past-the-end element in the matrix container. |
+| Method                   | Performance | Description                                                                        |
+| -------------------------| ----------- | ---------------------------------------------------------------------------------- |
+| `at(row): array<T>`      | _O(1)_      | Returns the column at the given row and column with bound checking.                         |
+| `at(row, columm): T`     | _O(1)_      | Returns the value at the given row and column with bound checking.                             |
+| `at(row, columm, value)` | _O(1)_    | Sets the value at the given row and column with bound checking.                             |
+| `begin(): iterator`      | _O(1)_      | Returns an iterator pointing to the first element in the matrix.                   |
+| `end(): iterator`        | _O(1)_      | Returns an iterator referring to the past-the-end element in the matrix container. |
 
 | Operator       | Performance | Description                                                    |
 | -------------- | ----------- | -------------------------------------------------------------- |

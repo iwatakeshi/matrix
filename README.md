@@ -20,25 +20,25 @@ You can also add a [version constraint](https://github.com/LoopPerfect/buckaroo/
 | Constructor           | Performance | Description                                                       |
 | --------------------- | ----------- | ----------------------------------------------------------------- |
 | `matrix()`            | _O(1)_      | Initializes a new empty matrix.                                   |
-| `matrix(n, m)`        | _O(1)_      | Initializes a new matrix of size `n` by `m`.                      |
-| `matrix(n, m, value)` | _O(n)_      | Initializes a new matrix of size `n` by `m` with the given value. |
-| `matrix(list)`        | _O(n)_      | Initializes a new matrix with list initialization.                |
+| `matrix(n, m)`        | _O(n^2)_    | Initializes a new matrix of size `n` by `m`.                      |
+| `matrix(n, m, value)` | _O(n^2)_    | Initializes a new matrix of size `n` by `m` with the given value. |
+| `matrix(list)`        | _O(n^2)_    | Initializes a new matrix with list initialization.                |
 
 | Method                | Performance | Description                                                                        |
 | --------------------- | ----------- | ---------------------------------------------------------------------------------- |
-| `at(index): T`        | _O(1)_      | Returns the element at the given index with bound checking.                        |
-| `at(index, value): T` | _O(1)_      | Sets the value at the given index with bound checking.                             |
+| `at(index): T`        | _O(n^2)_    | Returns the element at the given index with bound checking.                        |
+| `at(index, value): T` | _O(n^2)_    | Sets the value at the given index with bound checking.                             |
 | `begin(): iterator`   | _O(1)_      | Returns an iterator pointing to the first element in the matrix.                   |
 | `end(): iterator`     | _O(1)_      | Returns an iterator referring to the past-the-end element in the matrix container. |
 
 | Operator       | Performance | Description                                                    |
 | -------------- | ----------- | -------------------------------------------------------------- |
-| `a[index]`     | _O(1)_      | Overloads **[]** to select elements from this matrix.          |
-| `a + b`        | _O(n)_      | Adds two matrixs.                                              |
-| `a += b`       | _O(n)_      | Adds two matrixs and assigns it to `a`.                        |
-| `a - b`        | _O(n)_      | Subtracts two matrixs.                                         |
-| `a -= b`       | _O(n)_      | Subtracts two matrixs and assigns it to `a`.                   |
-| `ostream << a` | _O(n)_      | Outputs the contents of the matrix to the given output stream. |
+| `a[index]`     | _O(1)_      | Overloads **[]** to select the row from this matrix.           |
+| `a + b`        | _O(n^2)_    | Adds two matrixs.                                              |
+| `a += b`       | _O(n^2)_    | Adds two matrixs and assigns it to `a`.                        |
+| `a - b`        | _O(n^2)_    | Subtracts two matrixs.                                         |
+| `a -= b`       | _O(n^2)_    | Subtracts two matrixs and assigns it to `a`.                   |
+| `ostream << a` | _O(n^2)_    | Outputs the contents of the matrix to the given output stream. |
 
 ## Example
 

@@ -38,3 +38,6 @@ buckaroo
 buckaroo_macros.bzl
 .buckconfig.d
 .buckconfig.local
+
+# VSCode
+.vscode/

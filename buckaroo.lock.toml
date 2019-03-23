@@ -1,9 +1,25 @@
-manifest = "08e212803785dcbfa9a723049026410cbae6b41db8aafe6b594ce5c203cc3234"
+manifest = "b82d96b1661d815fa2fc573e598ae7df0f083ed57d06114a3f3b7b51a1444715"
 
 [[dependency]]
 package = "github.com/iwatakeshi/array"
 target = "//:array"
 
+[[dependency]]
+package = "github.com/iwatakeshi/to_string"
+target = "//:to_string"
+
 [lock."github.com/iwatakeshi/array"]
-versions = [ "tag=1.0.0-alpha-10" ]
-revision = "9c78b564a1b2d6655c6293397baa7fc3590bbc26"
+versions = [ "tag=1.0.0-alpha.1" ]
+revision = "341c913cb9d2ad5c7f4983b098017aa9767c5a1a"
+
+[lock."github.com/iwatakeshi/bench"]
+versions = [ "branch=master" ]
+revision = "0fe9e1605ee18500fed023ef364abc1cbf322d0a"
+
+[lock."github.com/iwatakeshi/latte"]
+versions = [ "branch=master" ]
+revision = "ec0c31092af3d9b42e757a6bb375d817ff522376"
+
+[lock."github.com/iwatakeshi/to_string"]
+versions = [ "tag=1.0.0-alpha" ]
+revision = "b02f78ebbaf245b137e9bb1e4299aced026910a3"

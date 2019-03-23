@@ -1,29 +1,32 @@
 #ifndef MATRIX_H
 #define MATRIX_H
+#include <to_string.hpp>
 #include <array.hpp>
+#include <iomanip>
 #include <iostream>
-#include <sstream>
+#include <ostream>
 #include <stdexcept>
 
+namespace stdlib {
 template <class T>
 class matrix {
-
-private:
+  private:
   array<array<T>> matrix_;
   int64_t rows_ = 0;
   int64_t columns_ = 0;
-public:
 
+  public:
   /**
    * Initializes a new empty matrix.
    */
-  matrix(): matrix(0, 0) {}
+  matrix() :
+      matrix(0, 0) {}
 
   /**
    * Initializes a new n x m matrix with the given value.
    */
-  matrix(int64_t rows, int64_t columns, const T& value = T()) : 
-  rows_(rows), columns_(columns), matrix_(rows, array<T>(columns, value)) {}
+  matrix(int64_t rows, int64_t columns, const T& value = T()) :
+      rows_(rows), columns_(columns), matrix_(rows, array<T>(columns, value)) {}
 
   /**
    * Initializes a new n x m matrix with nested list initialization.
@@ -31,14 +34,25 @@ public:
   matrix(std::initializer_list<std::initializer_list<T>> const& list) {
     matrix_.reserve(list.size());
     rows_ = list.size();
-    
-    for(auto row = list.begin(), i = 0; row != list.end(); row++, i++) {
-      matrix_[i] = array<T>((*row).size());
-      for (auto column = (*row).begin(), j = 0; column != (*row).end(); column++, j++) {
-        matrix_[i][j] = *column;
+    columns_ = (*(list.begin())).size();
+    int i = 0;
+    for (auto row = list.begin(); row != list.end(); row++) {
+      if ((*row).size() != columns_) {
+        throw std::logic_error("The columns are not equal");
       }
+      matrix_[i] = array<T>((*row).size());
+
+      int j = 0;
+      for (auto column = (*row).begin(); column != (*row).end(); column++) {
+        matrix_[i][j] = *column;
+        j += 1;
+      }
+      i += 1;
     }
   }
+
+  typedef typename array<array<T>>::iterator iterator;
+  typedef typename array<array<T>>::const_iterator const_iterator;
 
   /**
    * Overloads [] to select the rows from this matrix.
@@ -57,12 +71,108 @@ public:
   /**
    * Outputs the contents of the matrix to the given output stream.
    */
-  friend ostream& operator << (ostream& os, const matrix<T>& matrix) {
+  friend std::ostream& operator<<(std::ostream& os, const matrix<T>& matrix) {
     auto n = matrix.rows();
+    auto m = matrix.columns();
     for (auto i = 0; i < n; i++) {
-      os << matrix[i] << std::endl;
+      os << "[ ";
+      for (auto j = 0; j < m; j++) {
+        os << std::setw(2) << stdlib::to_string(matrix[i][j]);
+        if (j != m - 1) {
+          os << " ";
+        }
+      }
+      os << " ]" << std::endl;
     }
     return os;
+  }
+
+  /**
+   * Adds two matrices together
+   */
+  matrix<T> operator+(const matrix<T>& right) {
+    if (this->rows_ != right.rows_) {
+      throw std::logic_error("The rows of the matrices are not equal");
+    }
+
+    if (this->columns_ != right.columns_) {
+      throw std::logic_error("The columns of the matrices are not equal");
+    }
+
+    matrix<T> temp(this->rows_, this->columns_);
+
+    for (auto i = 0; i < this->rows_; i++) {
+      for (auto j = 0; j < this->columns_; j++) {
+        temp[i][j] = operator[](i)[j] + right[i][j];
+      }
+    }
+
+    return temp;
+  }
+
+  /**
+   * Adds two matrices together
+   */
+  matrix<T>& operator+=(const matrix<T>& right) {
+    if (this->rows_ != right.rows_) {
+      throw std::logic_error("The rows of the matrices are not equal");
+    }
+
+    if (this->columns_ != right.columns_) {
+      throw std::logic_error("The columns of the matrices are not equal");
+    }
+
+    for (auto i = 0; i < this->rows_; i++) {
+      for (auto j = 0; j < this->columns_; j++) {
+        operator[](i)[j] = operator[](i)[j] + right[i][j];
+      }
+    }
+
+    return *this;
+  }
+
+  /**
+   * Subtracts two matrices together
+   */
+  matrix<T> operator-(const matrix<T>& right) {
+    if (this->rows_ != right.rows_) {
+      throw std::logic_error("The rows of the matrices are not equal");
+    }
+
+    if (this->columns_ != right.columns_) {
+      throw std::logic_error("The columns of the matrices are not equal");
+    }
+
+    matrix<T> temp(this->rows_, this->columns_);
+
+    for (auto i = 0; i < this->rows_; i++) {
+      for (auto j = 0; j < this->columns_; j++) {
+        temp[i][j] = operator[](i)[j] - right[i][j];
+      }
+    }
+
+    return temp;
+  }
+
+  /**
+   * Subtracts two matrices together
+   */
+  matrix<T>& operator-=(const matrix<T>& right) {
+    if (this->rows_ != right.rows_) {
+      throw std::logic_error("The rows of the matrices are not equal");
+    }
+
+    if (this->columns_ != right.columns_) {
+      throw std::logic_error("The columns of the matrices are not equal");
+    }
+
+    for (auto i = 0; i < this->rows_; i++) {
+      for (auto j = 0; j < this->columns_; j++) {
+        operator[](i)[j] = operator[](i)[j] - right[i][j];
+      }
+    }
+
+    return *this;
   }
 
   /**
@@ -95,7 +205,7 @@ public:
       throw std::out_of_range("Index is out of bounds");
     }
 
-    if (column < 0 || column >= matrix_[row].length()) {
+    if (column < 0 || column >= columns_) {
       throw std::out_of_range("Index is out of bounds");
     }
 
@@ -110,13 +220,13 @@ public:
       throw std::out_of_range("Index is out of bounds");
     }
 
-    if (column < 0 || column >= matrix_[row].length()) {
+    if (column < 0 || column >= columns_) {
       throw std::out_of_range("Index is out of bounds");
     }
 
     return matrix_[row][column];
   }
-  
+
   /**
    * Returns the number of rows in this matrix.
    */
@@ -137,7 +247,7 @@ public:
   void reserve(int64_t rows, int64_t columns) {
     reserve(rows, columns, false);
   }
-  
+
   /**
    * Allocates space on the heap.
    */
@@ -155,7 +265,7 @@ public:
     matrix_.reserve(rows, copy);
 
     // Resize the columns
-    for(auto i = 0; i < rows; i++) {
+    for (auto i = 0; i < rows; i++) {
       if (copy) {
         matrix_[i].reserve(columns, copy);
       } else {
@@ -167,17 +277,31 @@ public:
   /**
    * Returns an iterator pointing to the first row in the matrix.
    */
-  typename array<array<T>>::iterator begin() {
+  iterator begin() {
     return matrix_.begin();
   }
 
   /**
    * Returns an iterator referring to the past-the-end row in the matrix.
    */
-  typename array<array<T>>::iterator end() {
+  iterator end() {
     return matrix_.end();
   }
 
+  /**
+   * Returns a const_iterator pointing to the first row in the matrix.
+   */
+  const_iterator begin() const {
+    return matrix_.begin();
+  }
+
+  /**
+   * Returns a const_iterator referring to the past-the-end row in the matrix.
+   */
+  const_iterator end() const {
+    return matrix_.end();
+  }
 };
+}
 
 #endif

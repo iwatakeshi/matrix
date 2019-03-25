@@ -1,11 +1,11 @@
 #ifndef MATRIX_H
 #define MATRIX_H
-#include <to_string.hpp>
 #include <array.hpp>
 #include <iomanip>
 #include <iostream>
 #include <ostream>
 #include <stdexcept>
+#include <to_string.hpp>
 
 namespace stdlib {
 template <class T>
@@ -51,8 +51,33 @@ class matrix {
     }
   }
 
+  /**
+   * Performs a deep copy of the matrix
+   */
+  matrix(const matrix<T>& right) {
+    reserve(right.rows_, right.columns_);
+    for (auto i = 0; i < rows_; i++) {
+      for (auto j = 0; j < columns_; j++) {
+        matrix_[i][j] = right[i][j];
+      }
+    }
+  }
+
   typedef typename array<array<T>>::iterator iterator;
   typedef typename array<array<T>>::const_iterator const_iterator;
+
+  /**
+   * Overloads the assignment operator.
+   */
+  matrix<T>& operator=(const matrix<T>& right) {
+    reserve(right.rows_, right.columns_);
+    for (auto i = 0; i < right.rows_; i++) {
+      for (auto j = 0; j < right.columns_; j++) {
+        matrix_[i][j] = right[i][j];
+      }
+    }
+    return *this;
+  }
 
   /**
    * Overloads [] to select the rows from this matrix.
@@ -132,7 +157,7 @@ class matrix {
   }
 
   /**
-   * Subtracts two matrices together
+   * Subtracts two matrices together.
    */
   matrix<T> operator-(const matrix<T>& right) {
     if (this->rows_ != right.rows_) {
@@ -155,7 +180,7 @@ class matrix {
   }
 
   /**
-   * Subtracts two matrices together
+   * Subtracts two matrices together.
    */
   matrix<T>& operator-=(const matrix<T>& right) {
     if (this->rows_ != right.rows_) {
@@ -172,6 +197,35 @@ class matrix {
       }
     }
 
+    return *this;
+  }
+
+  /**
+   * Multiplies two matrices together.
+   */
+  matrix<T> operator*(const matrix<T>& right) {
+    if (columns_ != right.rows_) {
+      throw std::runtime_error("The number of columns in the rhs must be equal to the number of rows in the lhs");
+    }
+
+    matrix<T> temp(this->rows_, right.columns_);
+
+    for (auto i = 0; i < this->rows_; i++) {
+      for (auto j = 0; j < right.columns_; j++) {
+        for (auto k = 0; k < this->columns_; k++) {
+          temp.matrix_[i][j] += matrix_[i][k] * right.matrix_[k][j];
+        }
+      }
+    }
+
+    return temp;
+  }
+
+  /**
+   * Multiplies two matrices together and assigns it to the lhs.
+   */
+  matrix<T>& operator*=(const matrix<T>& right) {
+    *this = *this * right;
     return *this;
   }
 
@@ -259,16 +313,9 @@ class matrix {
   /**
    * Allocates space on the heap.
    */
-  void reserve(int64_t rows, int64_t columns) {
-    reserve(rows, columns, false);
-  }
-
-  /**
-   * Allocates space on the heap.
-   */
-  void reserve(int64_t rows, int64_t columns, bool copy) {
+  void reserve(int64_t rows, int64_t columns, bool copy = false) {
     // Do nothing if the size has not changed
-    if (rows == rows_) {
+    if (rows == this->rows_ && columns == this->columns_) {
       return;
     }
 

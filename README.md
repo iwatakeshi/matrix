@@ -39,8 +39,8 @@ You can also add a [version constraint](https://github.com/LoopPerfect/buckaroo/
 | `a += b`       | _O(n^2)_    | Adds two matrixs and assigns it to `a`.                        |
 | `a - b`        | _O(n^2)_    | Subtracts two matrixs.                                         |
 | `a -= b`       | _O(n^2)_    | Subtracts two matrixs and assigns it to `a`.                   |
-| `a * b`        | _O(n^2)_    | Multiplies two matrixs.                                        |
-| `a *= b`       | _O(n^2)_    | Multiplies two matrixs and assigns it to `a`.                  |
+| `a * b`        | _O(n^3)_    | Multiplies two matrixs.                                        |
+| `a *= b`       | _O(n^3)_    | Multiplies two matrixs and assigns it to `a`.                  |
 | `ostream << a` | _O(n^2)_    | Outputs the contents of the matrix to the given output stream. |
 
 ## Example

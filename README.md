@@ -26,9 +26,9 @@ You can also add a [version constraint](https://github.com/LoopPerfect/buckaroo/
 
 | Method                   | Performance | Description                                                                        |
 | -------------------------| ----------- | ---------------------------------------------------------------------------------- |
-| `at(row): array<T>`      | _O(1)_      | Returns the column at the given row and column with bound checking.                         |
-| `at(row, columm): T`     | _O(1)_      | Returns the value at the given row and column with bound checking.                             |
-| `at(row, columm, value)` | _O(1)_    | Sets the value at the given row and column with bound checking.                             |
+| `at(row): array<T>`      | _O(1)_      | Returns the column at the given row and column with bound checking.                |
+| `at(row, columm): T`     | _O(1)_      | Returns the value at the given row and column with bound checking.                 |
+| `at(row, columm, value)` | _O(1)_      | Sets the value at the given row and column with bound checking.                    |
 | `begin(): iterator`      | _O(1)_      | Returns an iterator pointing to the first element in the matrix.                   |
 | `end(): iterator`        | _O(1)_      | Returns an iterator referring to the past-the-end element in the matrix container. |
 
@@ -39,6 +39,8 @@ You can also add a [version constraint](https://github.com/LoopPerfect/buckaroo/
 | `a += b`       | _O(n^2)_    | Adds two matrixs and assigns it to `a`.                        |
 | `a - b`        | _O(n^2)_    | Subtracts two matrixs.                                         |
 | `a -= b`       | _O(n^2)_    | Subtracts two matrixs and assigns it to `a`.                   |
+| `a * b`        | _O(n^2)_    | Multiplies two matrixs.                                        |
+| `a *= b`       | _O(n^2)_    | Multiplies two matrixs and assigns it to `a`.                  |
 | `ostream << a` | _O(n^2)_    | Outputs the contents of the matrix to the given output stream. |
 
 ## Example
